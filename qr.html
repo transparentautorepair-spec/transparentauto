@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Transparent Auto - QR Code</title>
+<style>
+body{margin:0;padding:0;font-family:Arial,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;background:#fff}
+.qr-only{text-align:center}
+.qr-only img{width:500px;height:500px;margin:0}
+@media print{body{margin:0;padding:0;background:#fff}.qr-only{margin:0;padding:0}.qr-only img{width:100%;max-width:600px}}
+</style>
+</head>
+<body>
+<div class="qr-only">
+<img src="https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=https://transparentautorepair-spec.github.io/transparentauto/" alt="QR Code">
+</div>
+<script>
+window.addEventListener('load', function() {
+  window.print();
+});
+</script>
+</body>
+</html>
