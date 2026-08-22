@@ -5,15 +5,92 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Transparent Auto</title>
 <style>
-body{margin:0;font-family:Arial,sans-serif;background:#1a1a1a;color:#fff;display:flex;min-height:100vh;align-items:center;justify-content:center}
-.card{width:min(420px,90vw);text-align:center;padding:34px 22px;background:#252525;border-radius:24px;box-sizing:border-box;border:2px solid #ff6b35}
-.logo{width:200px;height:auto;margin:0 auto 16px;display:block}
-p{color:#e8e8e8;margin:0 0 24px;font-size:16px}
-a{display:block;text-decoration:none;background:#ff6b35;color:#fff;padding:16px;border-radius:12px;margin:12px 0;font-weight:700;transition:all 0.3s ease}
-a:hover{background:#ff5520;box-shadow:0 4px 12px rgba(255,107,53,0.3)}
+/* Page layout and palette adjusted to a blue scheme */
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background: linear-gradient(180deg,#0a64d6 0%, #054aa8 100%);
+  color:#fff;
+  display:flex;
+  min-height:100vh;
+  align-items:center;
+  justify-content:center;
+}
+
+.card{
+  width:min(420px,90vw);
+  text-align:center;
+  padding:34px 22px;
+  background:rgba(255,255,255,0.04); /* subtle translucent card over blue bg */
+  border-radius:24px;
+  box-sizing:border-box;
+  border:2px solid rgba(122,190,255,0.18); /* soft blue border */
+  backdrop-filter: blur(6px);
+  box-shadow: 0 8px 30px rgba(5,26,65,0.45);
+}
+
+.logo{
+  width:240px; /* slightly bigger than before (was 200px) */
+  height:auto;
+  margin:0 auto 16px;
+  display:block;
+  filter: drop-shadow(0 6px 18px rgba(6,74,168,0.35));
+}
+
+p{
+  color:#e8f4ff; /* very light blue-white for readability */
+  margin:0 0 24px;
+  font-size:16px;
+}
+
+/* Primary action/link buttons in blue palette */
+a{
+  display:block;
+  text-decoration:none;
+  background:#1ea7ff;
+  color:#00314d;
+  padding:16px;
+  border-radius:12px;
+  margin:12px 0;
+  font-weight:700;
+  transition:all 0.25s ease;
+  box-shadow: 0 6px 18px rgba(30,167,255,0.18);
+}
+a:hover{
+  background:#138fe6;
+  transform: translateY(-2px);
+  box-shadow:0 10px 30px rgba(19,143,230,0.22);
+}
+
 /* QR-specific styles to keep the QR image compact and centered */
-a.qr{display:block;margin:12px auto;width:fit-content;background:transparent;padding:0}
-a.qr img{display:block;width:120px;height:120px;border-radius:12px;background:#fff;padding:8px}
+a.qr{
+  display:block;
+  margin:12px auto;
+  width:fit-content;
+  background:transparent;
+  padding:0;
+}
+a.qr img{
+  display:block;
+  width:120px;
+  height:120px;
+  border-radius:12px;
+  background:#fff;
+  padding:8px;
+}
+
+/* small link (Leave a review) style — keep readable on blue */
+a[target="_blank"]{
+  background:transparent;
+  color:#dff3ff;
+  border:1px solid rgba(223,243,255,0.08);
+  box-shadow:none;
+}
+a[target="_blank"]:hover{
+  background:rgba(255,255,255,0.03);
+  color:#fff;
+  box-shadow:0 6px 18px rgba(8,34,84,0.25);
+}
 </style>
 </head>
 <body>
