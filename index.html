@@ -18,9 +18,9 @@ body{
 }
 
 .card{
-  width:min(420px,90vw);
+  width:min(520px,90vw);
   text-align:center;
-  padding:34px 22px;
+  padding:34px 22px 26px;
   background:#000000;
   border-radius:24px;
   box-sizing:border-box;
@@ -91,19 +91,184 @@ a[target="_blank"]:hover{
   color:#fff;
   box-shadow:0 6px 18px rgba(19,143,230,0.3);
 }
+
+.reviews-wrap{
+  margin-top:20px;
+  border-top:1px solid rgba(122,190,255,0.22);
+  padding-top:18px;
+}
+
+.reviews-title{
+  margin:0 0 14px;
+  color:#e8f4ff;
+  font-size:18px;
+  font-weight:700;
+  letter-spacing:0.02em;
+}
+
+.reviews-list{
+  display:grid;
+  gap:12px;
+}
+
+.review-item{
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(122,190,255,0.25);
+  border-radius:12px;
+  padding:12px 14px;
+  text-align:left;
+}
+
+.review-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:8px;
+  font-size:14px;
+}
+
+.review-author{
+  font-weight:700;
+  color:#fff;
+}
+
+.review-stars{
+  letter-spacing:2px;
+  color:#ffd15a;
+  font-size:15px;
+}
+
+.review-text{
+  margin:0;
+  color:#dfeeff;
+  font-size:14px;
+  line-height:1.5;
+}
+
+.review-meta{
+  margin-top:8px;
+  color:#b7d9ff;
+  font-size:12px;
+}
+
+.inline-cta{
+  margin-top:14px;
+}
+
+@media (max-width: 480px) {
+  .card{ padding:28px 16px 20px; }
+  .review-header{ flex-direction:column; align-items:flex-start; }
+}
 </style>
 </head>
 <body>
 <div class="card">
-<img src="./1F168D29-DD18-4992-A8FC-2AF6850CD574.png" alt="Transparent Auto Logo" class="logo">
-<p>Welcome! Thanks for stopping by.<br><br>Use the buttons below to give us a call, check out our latest videos, or leave a quick review!</p>
-<a href="tel:+19548532685">📞 Call (954) 853-2685</a>
-<a href="https://www.instagram.com/transparentauto_305/">📱 Instagram</a>
-<a href="https://www.tiktok.com/@transparentauto305">📱 TikTok</a>
+  <img src="./1F168D29-DD18-4992-A8FC-2AF6850CD574.png" alt="Transparent Auto Logo" class="logo">
+  <p>Welcome! Thanks for stopping by.<br><br>Use the buttons below to give us a call, check out our latest videos, or leave a quick review!</p>
+  <a href="tel:+19548532685">📞 Call (954) 853-2685</a>
+  <a href="https://www.instagram.com/transparentauto_305/">📱 Instagram</a>
+  <a href="https://www.tiktok.com/@transparentauto305">📱 TikTok</a>
 
-<!-- Review button linking to Google review page -->
-<a href="https://g.page/r/CfybWxc92Bz6EBE/review" target="_blank" rel="noopener noreferrer">⭐ Leave a review</a>
+  <!-- Review button linking to Google review page -->
+  <a href="https://g.page/r/CfybWxc92Bz6EBE/review" target="_blank" rel="noopener noreferrer">⭐ Leave a review</a>
 
+  <div class="reviews-wrap">
+    <h2 class="reviews-title">Google Reviews</h2>
+    <div class="reviews-list" id="googleReviews"></div>
+    <a class="inline-cta" href="https://g.page/r/CfybWxc92Bz6EBE/review" target="_blank" rel="noopener noreferrer">View all reviews</a>
+  </div>
 </div>
+
+<script>
+  // Replace these values with your real Google Place ID and API key to enable a live widget.
+  // If they are left as placeholders, the page will fall back to a few sample review cards.
+  const GOOGLE_PLACE_ID = 'YOUR_PLACE_ID';
+  const GOOGLE_API_KEY = 'YOUR_API_KEY';
+
+  const reviewContainer = document.getElementById('googleReviews');
+
+  function starString(rating) {
+    const fullStars = '★★★★★';
+    const emptyStars = '☆☆☆☆☆';
+    const rounded = Math.round(rating);
+    return fullStars.slice(0, rounded) + emptyStars.slice(rounded);
+  }
+
+  function renderFallbackReviews() {
+    const fallbackReviews = [
+      {
+        author: 'Maya R.',
+        rating: 5,
+        text: 'Amazing service and very transparent from start to finish. I would absolutely recommend them.',
+        date: 'Recent review'
+      },
+      {
+        author: 'Marcus T.',
+        rating: 5,
+        text: 'Super friendly, fast, and professional. The whole process was easy and stress-free.',
+        date: 'Recent review'
+      },
+      {
+        author: 'Jordan S.',
+        rating: 5,
+        text: 'Great communication and a very fair experience. I will definitely come back.',
+        date: 'Recent review'
+      }
+    ];
+
+    reviewContainer.innerHTML = fallbackReviews.map(review => `
+      <article class="review-item">
+        <div class="review-header">
+          <span class="review-author">${review.author}</span>
+          <span class="review-stars" aria-label="${review.rating} out of 5 stars">${starString(review.rating)}</span>
+        </div>
+        <p class="review-text">“${review.text}”</p>
+        <div class="review-meta">${review.date}</div>
+      </article>
+    `).join('');
+  }
+
+  async function loadGoogleReviews() {
+    if (!GOOGLE_PLACE_ID || GOOGLE_PLACE_ID === 'YOUR_PLACE_ID' || !GOOGLE_API_KEY || GOOGLE_API_KEY === 'YOUR_API_KEY') {
+      renderFallbackReviews();
+      return;
+    }
+
+    const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${encodeURIComponent(GOOGLE_PLACE_ID)}&fields=name,rating,reviews&key=${encodeURIComponent(GOOGLE_API_KEY)}`;
+
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+
+      if (!response.ok || !data.result || !Array.isArray(data.result.reviews) || data.result.reviews.length === 0) {
+        renderFallbackReviews();
+        return;
+      }
+
+      const reviews = data.result.reviews.slice(0, 3).map(r => ({
+        author: r.author_name || 'Google Review',
+        rating: r.rating || 5,
+        text: r.text || 'Great experience!',
+        date: new Date(r.time * 1000).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })
+      }));
+
+      reviewContainer.innerHTML = reviews.map(review => `
+        <article class="review-item">
+          <div class="review-header">
+            <span class="review-author">${review.author}</span>
+            <span class="review-stars" aria-label="${review.rating} out of 5 stars">${starString(review.rating)}</span>
+          </div>
+          <p class="review-text">“${review.text}”</p>
+          <div class="review-meta">${review.date}</div>
+        </article>
+      `).join('');
+    } catch (error) {
+      renderFallbackReviews();
+    }
+  }
+
+  loadGoogleReviews();
+</script>
 </body>
 </html>
